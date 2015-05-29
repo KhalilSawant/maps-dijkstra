@@ -1,2 +1,2 @@
 # mh-dj
-Maharashtra-Dikjstra
+Maharashtra-Dijkstra
