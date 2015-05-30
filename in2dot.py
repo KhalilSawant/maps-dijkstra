@@ -3,8 +3,8 @@
 inputFile = open("mh-dj.in", "r")
 outputFile = open("mh-dj.dot", "w");
 
-listOfPlaces = []
-setOfPlaces = set()
+listOfPlaces = [] # List of places to be sorted by their Longitude
+adjList = {}
 listOfDistances = []
 
 try:
@@ -16,13 +16,13 @@ try:
 			assert 0 < len(place[1]) < 5, "Latitude of {0} is of wrong size, should be 4 digits".format(place[0])
 			assert 0 < len(place[2]) < 5, "Longitude of {0} is of wrong size, should be 4 digits".format(place[0])
 
-			setOfPlaces.add(place[0])
+			adjList[place[0]] = {}
 			place.reverse(); # First Long, then Lat, then Name
 			listOfPlaces.append(place);
 
 		else:
-			assert place[0] in setOfPlaces
-			assert place[1] in setOfPlaces
+			assert place[0] in adjList.keys()
+			assert place[1] in adjList.keys()
 
 			listOfDistances.append(place)
 
@@ -32,7 +32,7 @@ try:
 	outputFile.write("\trankdir=LR;\n")
 	outputFile.write("\n")
 
-	for name in setOfPlaces:
+	for name in adjList.keys():
 		outputFile.write('\t"{0}" [label="{1}" shape=box]\n'.format(name, name))
 	outputFile.write("\n")
 
