@@ -9,7 +9,15 @@ distances = []
 
 try:
 	for entry in inputFile.readlines():
+
+		if "#" == entry[0]:
+			continue
+
 		entry = entry.split()
+
+		if 0 == len(entry):
+			continue
+
 		assert 3 == len(entry), "Either (Name, Latitude, Longitude) OR (Place1, Place2, Distance) no more, no less"
 
 		if entry[1].isdigit():
