@@ -3,30 +3,30 @@
 inputFile = open("mh-dj.in", "r")
 outputFile = open("mh-dj.dot", "w");
 
-listOfPlaces = [] # List of places to be sorted by their Longitude
+places = [] # List of places to be sorted by their Longitude
 adjList = {}
-listOfDistances = []
+distances = []
 
 try:
-	for place in inputFile.readlines():
-		place = place.split()
-		assert 3 == len(place), "Either (Name, Latitude, Longitude) OR (Place1, Place2, Distance) no more, no less"
+	for entry in inputFile.readlines():
+		entry = entry.split()
+		assert 3 == len(entry), "Either (Name, Latitude, Longitude) OR (Place1, Place2, Distance) no more, no less"
 
-		if place[1].isdigit():
-			assert 0 < len(place[1]) < 5, "Latitude of {0} is of wrong size, should be 4 digits".format(place[0])
-			assert 0 < len(place[2]) < 5, "Longitude of {0} is of wrong size, should be 4 digits".format(place[0])
+		if entry[1].isdigit():
+			assert 0 < len(entry[1]) < 5, "Latitude of {0} is of wrong size, should be 4 digits".format(entry[0])
+			assert 0 < len(entry[2]) < 5, "Longitude of {0} is of wrong size, should be 4 digits".format(entry[0])
 
-			adjList[place[0]] = {}
-			place.reverse(); # First Long, then Lat, then Name
-			listOfPlaces.append(place);
+			adjList[entry[0]] = {}
+			entry.reverse(); # First Long, then Lat, then Name
+			places.append(entry);
 
 		else:
-			assert place[0] in adjList.keys()
-			assert place[1] in adjList.keys()
+			assert entry[0] in adjList.keys()
+			assert entry[1] in adjList.keys()
 
-			listOfDistances.append(place)
+			distances.append(entry)
 
-	listOfPlaces.sort() # Sort by first Long, then Lat, then Name
+	places.sort() # Sort by first Long, then Lat, then Name
 
 	outputFile.write("graph mh {\n")
 	outputFile.write("\trankdir=LR;\n")
@@ -36,19 +36,19 @@ try:
 		outputFile.write('\t"{0}" [label="{1}" shape=box]\n'.format(name, name))
 	outputFile.write("\n")
 
-	if listOfPlaces > 0:
-		outputFile.write('\t{ rank = min; "' + listOfPlaces[0][2] + '"; }\n')
-		listOfPlaces.pop(0);
+	if places > 0:
+		outputFile.write('\t{ rank = min; "' + places[0][2] + '"; }\n')
+		places.pop(0);
 
-	if listOfPlaces > 0:
-		outputFile.write('\t{ rank = max; "' + listOfPlaces[-1][2] + '"; }\n')
-		listOfPlaces.pop();
+	if places > 0:
+		outputFile.write('\t{ rank = max; "' + places[-1][2] + '"; }\n')
+		places.pop();
 
-	for place in listOfPlaces:
+	for place in places:
 		outputFile.write('\t{ rank = same; "' + place[2] + '"; }\n')
 	outputFile.write("\n")
 
-	for dist in listOfDistances:
+	for dist in distances:
 		outputFile.write('\t"{0}" -- "{1}" [label={2}]\n'.format(dist[0], dist[1], dist[2]))
 
 	outputFile.write("}")
