@@ -24,6 +24,9 @@ try:
 			assert entry[0] in adjList.keys()
 			assert entry[1] in adjList.keys()
 
+			adjList[entry[0]][entry[1]] = entry[2]
+			adjList[entry[1]][entry[0]] = entry[2]
+
 			distances.append(entry)
 
 	places.sort() # Sort by first Long, then Lat, then Name
@@ -36,16 +39,42 @@ try:
 		outputFile.write('\t"{0}" [label="{1}" shape=box]\n'.format(name, name))
 	outputFile.write("\n")
 
-	if places > 0:
-		outputFile.write('\t{ rank = min; "' + places[0][2] + '"; }\n')
-		places.pop(0);
-
-	if places > 0:
-		outputFile.write('\t{ rank = max; "' + places[-1][2] + '"; }\n')
-		places.pop();
+	groups = []
+	currGroup = []
 
 	for place in places:
-		outputFile.write('\t{ rank = same; "' + place[2] + '"; }\n')
+		linkExists = False;
+		neighbors = adjList[place[2]].keys()
+		for curr in currGroup:
+			if curr[2] in neighbors:
+				linkExists = True;
+				break;
+		if linkExists:
+			groups.append(currGroup)
+			currGroup = []
+		currGroup.append(place)
+
+	groups.append(currGroup)
+
+	if groups > 0:
+		outputFile.write('\t{ rank = min;')
+		for place in groups[0]:
+			outputFile.write(' "' + place[2] + '";')
+		outputFile.write(' }\n')
+		groups.pop(0);
+
+	if groups > 0:
+		outputFile.write('\t{ rank = max;')
+		for place in groups[-1]:
+			outputFile.write(' "' + place[2] + '";')
+		outputFile.write(' }\n')
+		groups.pop();
+
+	for group in groups:
+		outputFile.write('\t{ rank = same;')
+		for place in group:
+			outputFile.write(' "' + place[2] + '";')
+		outputFile.write(' }\n')
 	outputFile.write("\n")
 
 	for dist in distances:
