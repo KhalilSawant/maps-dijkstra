@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3 -B
 
 inputFile = open("mh-dj.in", "r")
 outputFile = open("mh-dj.dot", "w");
@@ -37,6 +37,7 @@ try:
 
 			distances.append(entry)
 
+
 	places.sort() # Sort by first Long, then Lat, then Name
 
 	outputFile.write("graph mh {\n")
@@ -64,14 +65,14 @@ try:
 
 	groups.append(currGroup)
 
-	if groups > 0:
+	if len(groups) > 0:
 		outputFile.write('\t{ rank = min;')
 		for place in groups[0]:
 			outputFile.write(' "' + place[2] + '";')
 		outputFile.write(' }\n')
 		groups.pop(0);
 
-	if groups > 0:
+	if len(groups) > 0:
 		outputFile.write('\t{ rank = max;')
 		for place in groups[-1]:
 			outputFile.write(' "' + place[2] + '";')
@@ -91,7 +92,7 @@ try:
 	outputFile.write("}")
 
 except Exception as exp:
-	print "Exception {0}".format(exp)
+	print("Exception {0}".format(exp))
 finally:
 	inputFile.close()
 	outputFile.close()
