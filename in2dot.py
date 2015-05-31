@@ -1,5 +1,13 @@
 #!/usr/bin/python3 -B
 
+def addGroupToGroups(groups, group):
+	groupId = len(groups)
+	for place in group:
+		place[0] = groupId
+	group.sort()
+	group.reverse()
+	groups.append(group)
+
 inputFile = open("mh-dj.in", "r")
 outputFile = open("mh-dj.dot", "w");
 
@@ -40,14 +48,6 @@ try:
 
 	places.sort() # Sort by first Long, then Lat, then Name
 
-	outputFile.write("graph mh {\n")
-	outputFile.write("\trankdir=LR;\n")
-	outputFile.write("\n")
-
-	for name in adjList.keys():
-		outputFile.write('\t"{0}" [label="{1}" shape=box]\n'.format(name, name))
-	outputFile.write("\n")
-
 	groups = []
 	currGroup = []
 
@@ -59,31 +59,36 @@ try:
 				linkExists = True;
 				break;
 		if linkExists:
-			groups.append(currGroup)
+			addGroupToGroups(groups, currGroup)
 			currGroup = []
 		currGroup.append(place)
 
-	groups.append(currGroup)
+	addGroupToGroups(groups, currGroup)
 
+	outputFile.write("graph mh {\n")
+	outputFile.write("\trankdir=LR;\n\n")
+
+	outputFile.write("\t{\n")
+	outputFile.write("\t\tnode [shape=plaintext label=\"\"]\n")
 	if len(groups) > 0:
-		outputFile.write('\t{ rank = min;')
-		for place in groups[0]:
-			outputFile.write(' "' + place[2] + '";')
-		outputFile.write(' }\n')
-		groups.pop(0);
+		outputFile.write("\t\t0")
+	for i in range(len(groups)-1):
+		 outputFile.write(" -- {0}".format(i+1))
+	outputFile.write("\n\t}\n\n")
 
-	if len(groups) > 0:
-		outputFile.write('\t{ rank = max;')
-		for place in groups[-1]:
-			outputFile.write(' "' + place[2] + '";')
-		outputFile.write(' }\n')
-		groups.pop();
+	outputFile.write("\tnode [shape=box]\n")
+	for name in adjList.keys():
+		outputFile.write('\t"{0}" [label="{1}"]\n'.format(name, name))
+	outputFile.write("\n")
 
+	groupId = 0;
 	for group in groups:
 		outputFile.write('\t{ rank = same;')
+		outputFile.write(' "{0}";'.format(groupId))
 		for place in group:
 			outputFile.write(' "' + place[2] + '";')
-		outputFile.write(' }\n')
+		outputFile.write(' rankdir=TB }\n')
+		groupId += 1;
 	outputFile.write("\n")
 
 	for dist in distances:
