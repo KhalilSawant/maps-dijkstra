@@ -29,8 +29,8 @@ try:
 			places.append(entry);
 
 		else:
-			assert entry[0] in adjList.keys()
-			assert entry[1] in adjList.keys()
+			assert entry[0] in adjList.keys(), "{0} not present in list of places".format(entry[0])
+			assert entry[1] in adjList.keys(), "{0} not present in list of places".format(entry[1])
 
 			adjList[entry[0]][entry[1]] = entry[2]
 			adjList[entry[1]][entry[0]] = entry[2]
