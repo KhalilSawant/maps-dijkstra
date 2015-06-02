@@ -70,6 +70,8 @@ try:
 
 	outputFile.write("\t{\n")
 	outputFile.write("\t\tnode [shape=plaintext label=\"\"]\n")
+	outputFile.write("\t\tedge [style=\"invisible\"]\n")
+
 	if len(groups) > 0:
 		outputFile.write("\t\t0")
 	for i in range(len(groups)-1):
@@ -83,10 +85,10 @@ try:
 
 	groupId = 0;
 	for group in groups:
-		outputFile.write('\t{ rank = same;')
-		outputFile.write(' "{0}";'.format(groupId))
+		outputFile.write('\t{ rank = same; edge [style="invisible"];')
+		outputFile.write(' "{0}"'.format(groupId))
 		for place in group:
-			outputFile.write(' "' + place[2] + '";')
+			outputFile.write(' -- "' + place[2] + '"')
 		outputFile.write(' rankdir=TB }\n')
 		groupId += 1;
 	outputFile.write("\n")
