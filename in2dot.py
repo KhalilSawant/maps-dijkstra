@@ -1,21 +1,16 @@
 #!/usr/bin/python3 -B
 
-def addGroupToGroups(groups, group):
-	groupId = len(groups)
-	for place in group:
-		place[0] = groupId
-	group.sort()
-	group.reverse()
-	groups.append(group)
-
 inputFile = open("mh-dj.in", "r")
-outputFile = open("mh-dj.dot", "w");
+outputFile = open("mh-dj.dot", "w")
 
 places = [] # List of places to be sorted by their Longitude
 adjList = {}
 distances = []
 
 try:
+	minY = 999999
+	minX = 999999
+
 	for entry in inputFile.readlines():
 
 		if "#" == entry[0]:
@@ -33,8 +28,13 @@ try:
 			assert 0 < len(entry[2]) < 5, "Longitude of {0} is of wrong size, should be 4 digits".format(entry[0])
 
 			adjList[entry[0]] = {}
-			entry.reverse(); # First Long, then Lat, then Name
-			places.append(entry);
+
+			if int(entry[2]) < minX:
+				minY = int(entry[2])
+			if int(entry[1]) < minY:
+				minY = int(entry[1])
+
+			places.append(entry)
 
 		else:
 			assert entry[0] in adjList.keys(), "{0} not present in list of places".format(entry[0])
@@ -45,58 +45,17 @@ try:
 
 			distances.append(entry)
 
-
-	places.sort() # Sort by first Long, then Lat, then Name
-
-	groups = []
-	currGroup = []
+	outputFile.write("graph mh {\n")
+	outputFile.write("\tnode [shape=box]\n\n")
 
 	for place in places:
-		linkExists = False;
-		neighbors = adjList[place[2]].keys()
-		for curr in currGroup:
-			if curr[2] in neighbors:
-				linkExists = True;
-				break;
-		if linkExists:
-			addGroupToGroups(groups, currGroup)
-			currGroup = []
-		currGroup.append(place)
-
-	addGroupToGroups(groups, currGroup)
-
-	outputFile.write("graph mh {\n")
-	outputFile.write("\trankdir=LR;\n\n")
-
-	outputFile.write("\t{\n")
-	outputFile.write("\t\tnode [shape=plaintext label=\"\"]\n")
-	outputFile.write("\t\tedge [style=\"invisible\"]\n")
-
-	if len(groups) > 0:
-		outputFile.write("\t\t0")
-	for i in range(len(groups)-1):
-		 outputFile.write(" -- {0}".format(i+1))
-	outputFile.write("\n\t}\n\n")
-
-	outputFile.write("\tnode [shape=box]\n")
-	for name in adjList.keys():
-		outputFile.write('\t"{0}" [label="{1}"]\n'.format(name, name))
-	outputFile.write("\n")
-
-	groupId = 0;
-	for group in groups:
-		outputFile.write('\t{ rank = same; edge [style="invisible"];')
-		outputFile.write(' "{0}"'.format(groupId))
-		for place in group:
-			outputFile.write(' -- "' + place[2] + '"')
-		outputFile.write(' rankdir=TB }\n')
-		groupId += 1;
+		outputFile.write('\t"{0}" [label="{1}" pos="{2},{3}!"]\n'.format(place[0], place[0], int(place[2])-minX, int(place[1])-minY ))
 	outputFile.write("\n")
 
 	for dist in distances:
 		outputFile.write('\t"{0}" -- "{1}" [label={2}]\n'.format(dist[0], dist[1], dist[2]))
 
-	outputFile.write("}")
+	outputFile.write("\n}")
 
 except Exception as exp:
 	print("Exception {0}".format(exp))
