@@ -46,14 +46,14 @@ try:
 			distances.append(entry)
 
 	outputFile.write("graph mh {\n")
-	outputFile.write("\tnode [shape=box]\n\n")
+	outputFile.write("\tnode [shape=box fontsize=36]\n\n")
 
 	for place in places:
-		outputFile.write('\t"{0}" [label="{1}" pos="{2},{3}!"]\n'.format(place[0], place[0], int(place[2])-minX, int(place[1])-minY ))
+		outputFile.write('\t"{0}" [label="{1}" pos="{2},{3}!"]\n'.format(place[0], place[0], 36*(int(place[2])-minX), 36*(int(place[1])-minY)) )
 	outputFile.write("\n")
 
 	for dist in distances:
-		outputFile.write('\t"{0}" -- "{1}" [label={2}]\n'.format(dist[0], dist[1], dist[2]))
+		outputFile.write('\t"{0}" -- "{1}" [label={2} fontsize=48]\n'.format(dist[0], dist[1], dist[2]))
 
 	outputFile.write("\n}")
 
