@@ -10,3 +10,9 @@ mh-dj.in is the input file which contains two types of entries
 in2dot.py converts this input file into .dot file, which can be used to be rendered as a graph using GraphViz
 
 mh-dj.py runs all-source Dijkstra Algorith on the input file, with graph.py models the graph
+
+
+# Commands
+./in2dot.py
+neato -Tpdf -n1 mh-dj.dot > mh-dj.pdf
+neato -Tps -n1 mh-dj.dot > mh-dj.ps
