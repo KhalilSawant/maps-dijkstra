@@ -14,5 +14,7 @@ mh-dj.py runs all-source Dijkstra Algorith on the input file, with graph.py mode
 
 # Commands
 ./in2dot.py
+
 neato -Tpdf -n1 mh-dj.dot > mh-dj.pdf
+
 neato -Tps -n1 mh-dj.dot > mh-dj.ps
