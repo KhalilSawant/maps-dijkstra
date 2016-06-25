@@ -1,7 +1,7 @@
-# mh-dj
-Maharashtra-Dijkstra
+# maps-dijkstra
+Graph like rendering of Map, and Dijkstra's Algorithm
 
-mh-dj.in is the input file which contains two types of entries
+<map-name>.in is the input file which contains two types of entries
 
 1. Town-names with the latitude and longitude
 
@@ -9,12 +9,15 @@ mh-dj.in is the input file which contains two types of entries
 
 in2dot.py converts this input file into .dot file, which can be used to be rendered as a graph using GraphViz
 
-mh-dj.py runs all-source Dijkstra Algorith on the input file, with graph.py models the graph
+all-src-dj.py or all-src-dj runs all-source Dijkstra Algorith on the input file, with graph.py and graph.cpp respectively modeling the graph
 
 
-# Commands
-./in2dot.py
+# Commandsa
 
-neato -Tpdf -n1 mh-dj.dot > mh-dj.pdf
+In Makefile
 
-neato -Tps -n1 mh-dj.dot > mh-dj.ps
+./in2dot.py <map-name>
+neato -Tpdf -n1 <map-name>.dot > <map-name>.pdf
+neato -Tps -n1 <map-name>.dot > <map-name>.ps
+
+all-src-dj.py/all-src-dj <map-name>

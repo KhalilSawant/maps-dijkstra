@@ -1,7 +1,11 @@
 #!/usr/bin/python3 -B
 
-inputFile = open("mh-dj.in", "r")
-outputFile = open("mh-dj.dot", "w")
+import sys
+
+assert 2 == len(sys.argv), "Usage in2dot.py <map-name>, e.g. in2dot.py mh"
+
+inputFile = open(sys.argv[1] + ".in", "r")
+outputFile = open(sys.argv[1] + ".dot", "w")
 
 places = [] # List of places to be sorted by their Longitude
 adjList = {}

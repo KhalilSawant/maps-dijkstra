@@ -1,13 +1,26 @@
-MH_DJ = mh-dj
+ALL_SRC_DJ = all-src-dj
 GRAPH = graph
 
-all: clean $(MH_DJ)
-	./$(MH_DJ)
+MH = mh
+MH_MAP = mh-map
+MH_DJ = mh-dj
 
-$(MH_DJ): $(MH_DJ).o $(GRAPH).o
+.PHONY: clean $(MH_MAP) $(MH_DJ)
+
+$(MH_DJ): $(ALL_SRC_DJ)
+	./$(ALL_SRC_DJ) $(MH)
+
+$(MH_MAP): in2dot.py $(MH).in
+	./in2dot.py $(MH)
+	neato -Tpdf -n1 $(MH).dot > $(MH).pdf
+	evince $(MH).pdf
+
+$(ALL_SRC_DJ): $(ALL_SRC_DJ).o $(GRAPH).o
 	$(CXX) -o $@ $^
 
 clean:
-	rm -f $(MH_DJ)
+	rm -f $(ALL_SRC_DJ)
 	rm -f *.o
 	rm -f *~
+	rm -f *.pdf
+	rm -f *.dot

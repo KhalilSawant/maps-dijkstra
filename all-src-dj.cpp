@@ -21,12 +21,15 @@ void traverse(unsigned int dist[], int pre[], int start, int curr, const vector<
 
 int main(int argc, char* argv[]) {
 
+	assert(2 == argc);
+
 	Graph g;
 	map<string, unsigned int> nameToIndexMap;
 	vector<string> indexToNameMap;
 
+	string inputFileName = argv[1];
 	ifstream fin;
-	fin.open("mh-dj.in");
+	fin.open( (string(argv[1])+string(".in")).c_str() );
 
 	string entry;
 

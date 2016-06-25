@@ -1,5 +1,6 @@
 #!/usr/bin/python3 -B
 
+import sys
 from graph import Graph
 
 def traverse(dist, pre, start, curr):
@@ -7,8 +8,8 @@ def traverse(dist, pre, start, curr):
 		traverse(dist, pre, start, pre[curr])
 	print(" {0}({1})".format(curr, dist[curr]), end="")
 
-
-inputFile = open("mh-dj.in", "r")
+assert 2 == len(sys.argv), "Usage in2dot.py <map-name>, e.g. in2dot.py mh"
+inputFile = open(sys.argv[1] + ".in", "r")
 
 try:
 
