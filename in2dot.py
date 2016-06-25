@@ -25,11 +25,15 @@ try:
 		if 0 == len(entry):
 			continue
 
+		if 2 == len(entry):
+			assert not entry[1].isdigit(), "Either (Name, Latitude, Longitude) OR (Place1, Place2, Distance) no more, no less"
+			entry.append(1)
+
 		assert 3 == len(entry), "Either (Name, Latitude, Longitude) OR (Place1, Place2, Distance) no more, no less"
 
 		if entry[1].isdigit():
-			assert 0 < len(entry[1]) < 5, "Latitude of {0} is of wrong size, should be 4 digits".format(entry[0])
-			assert 0 < len(entry[2]) < 5, "Longitude of {0} is of wrong size, should be 4 digits".format(entry[0])
+			assert (0 < len(entry[1]) < 5) or (5 == len(entry[1]) and "-" == entry[1][0] ), "Latitude of {0} is of wrong size, should be 4 digits".format(entry[0])
+			assert (0 < len(entry[2]) < 5) or (5 == len(entry[2]) and "-" == entry[2][0] ), "Longitude of {0} is of wrong size, should be 4 digits".format(entry[0])
 
 			adjList[entry[0]] = {}
 
