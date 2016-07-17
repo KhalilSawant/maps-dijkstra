@@ -48,8 +48,10 @@ Bhandara 2124 7965
 Gondiya 2146 8019
 Majri 2014 7904
 Chandrapur 1996 7930
+
 Madgaon 1527 7397
 Vasco 1549 7381
+
 Karwar 1482 7418
 Udupi 1334 7477
 Mangalore 1287 7488
@@ -81,6 +83,19 @@ Wadi 1705 7699
 Yadgiri 1674 7713
 Raichur 1619 7734
 Bidar 1791 7752
+
+Kasargod 1249 7499
+Kannur 1187 7537
+Kozhikode 1125 7578
+Shoranur 1076 7627
+Palakkad 1080 7664
+Trishur 1051 7621
+Kochi 0999 7629
+Allapuzha 0948 7632
+Kottayam 0960 7653
+Kayamkulam 0918 7651
+Kollam 0889 7660
+Tiruvananthapuram 0849 7695
 
 Mumbai Thane 34
 Thane Mathardi 11
@@ -136,8 +151,10 @@ Nagpur Bhandara 63
 Gondiya Bhandara 68
 Wardha Majri 85
 Chandrapur Majri 34
+
 Madgaon Oros 154
 Madgaon Vasco 28
+
 Madgaon Karwar 82
 Udupi Karwar 268
 Mangalore Udupi 82
@@ -174,3 +191,17 @@ Kalburgi Wadi 37
 Yadgiri Wadi 39
 Raichur Yadgiri 69
 Bidar Chakur 114
+
+Mangalore Kasargod 52
+Kannur Kasargod 86
+Kozhikode Kannur 90
+Kozhikode Shoranur 86
+Palakkad Shoranur 45
+Trishur Shoranur 33
+Kochi Trishur 72
+Kochi Allapuzha 60
+Kochi Kottayam 63
+Allapuzha Kayamkulam 44
+Kottayam Kayamkulam 55
+Kollam Kayamkulam 41
+Tiruvananthapuram Kollam 65
