@@ -22,4 +22,4 @@ neato -Tpdf -n1 "map-name".dot > "map-name".pdf
 
 neato -Tps -n1 "map-name".dot > "map-name".ps
 
-all-src-dj.py/all-src-dj <map-name>
+all-src-dj.py/all-src-dj "map-name"
